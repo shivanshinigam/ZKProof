@@ -1,3 +1,4 @@
+#predict_voice.py
 import joblib
 import librosa
 import numpy as np
@@ -20,6 +21,7 @@ def predict_voice_file(file_path, model=None):
     return model.predict(features)[0]  # 0=Bot, 1=Human
     print(f"[DEBUG] Audio shape: {audio.shape}, Sample rate: {sr}")
     print(f"[DEBUG] Duration: {audio.shape[0] / sr:.2f} seconds")
+    print(f"[DEBUG] Extracted shape: {features.shape}")
 
 
 # CLI optional

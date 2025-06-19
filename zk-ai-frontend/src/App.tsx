@@ -1,3 +1,4 @@
+// App.tsx
 import React, { useState } from 'react';
 import KeystrokeCapture from './components/KeystrokeCapture';
 import VoiceCapture from './components/VoiceCapture';
@@ -42,15 +43,11 @@ const App = () => {
       setContract(null);
       setExplanation(null);
 
-      const res = await axios.post<VerifyResponse>(
-        'http://localhost:8000/verify',
-        formData,
-        { headers: { 'Content-Type': 'multipart/form-data' } }
-      );
+      const res = await axios.post<VerifyResponse>('http://localhost:8000/verify', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
 
       const data = res.data;
-      console.log('✅ Response from /verify:', data);
-
       setVerified(data.verified);
       setCID(data.proof.ipfs_url);
       setContract(data.contract);
@@ -71,8 +68,7 @@ const App = () => {
         ipfs_url: cid,
       });
 
-      const explanationData = res.data as ExplanationData;
-      setExplanation(explanationData);
+      setExplanation(res.data as ExplanationData);
     } catch (err) {
       console.error('Failed to explain proof:', err);
       alert('Could not generate explanation.');
@@ -82,63 +78,67 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 font-sans">
-      <div className="max-w-2xl mx-auto bg-white shadow-xl rounded-2xl p-6 space-y-6">
-        <h1 className="text-3xl font-bold text-center text-indigo-600">
+    <div className="min-h-screen bg-gradient-to-br from-[#dbeafe] to-[#e9d5ff] py-10 px-4 font-sans">
+      <div className="max-w-4xl mx-auto bg-white/60 backdrop-blur-2xl shadow-2xl rounded-3xl p-8 space-y-8 border border-white/30">
+        <h1 className="text-4xl font-extrabold text-center text-indigo-800 drop-shadow-sm">
           🛡️ ZK-AI Identity Verifier
         </h1>
 
-        <p className="text-gray-700 text-center">
-          This tool verifies human identity using keystroke and voice
-          biometrics with zero-knowledge proof.
+        <p className="text-lg text-center text-gray-700">
+          Verify if you're human using <strong>biometrics + ZK proofs</strong> — voice + keystroke.
         </p>
 
-        <KeystrokeCapture onCapture={setKeystrokeBlob} />
-        <VoiceCapture onCapture={setVoiceBlob} />
+        <div className="grid md:grid-cols-2 gap-6">
+          <VoiceCapture onCapture={setVoiceBlob} />
+          <KeystrokeCapture onCapture={setKeystrokeBlob} />
+        </div>
 
         <button
           onClick={handleVerify}
           disabled={loading}
-          className={`w-full py-3 rounded-xl text-white font-semibold transition ${
+          className={`w-full py-4 rounded-2xl font-semibold text-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 ${
             loading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-indigo-600 hover:bg-indigo-700'
+              ? 'bg-gray-400 text-white cursor-not-allowed'
+              : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700'
           }`}
         >
-          {loading ? 'Verifying...' : '🔍 Verify Identity'}
+          {loading ? '🔄 Verifying...' : '🔍 Verify Identity'}
         </button>
 
         {(verified || cid) && (
-          <div className="bg-green-100 border border-green-400 p-4 rounded-lg text-green-800 space-y-2">
-            <p className="text-lg font-bold">
+          <div
+            className={`border-l-8 ${
+              verified ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'
+            } p-6 rounded-2xl shadow-inner space-y-3 animate-fade-in`}
+          >
+            <p className="text-xl font-bold text-gray-800">
               {verified ? '✅ Identity Verified' : '⚠️ Verification Failed!'}
             </p>
 
-            <p>
-              🧾 View ZK Proof →{' '}
+            <p className="text-gray-600">
+              🧾 Proof uploaded →{' '}
               <a
                 href={cid || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline text-blue-600"
+                className="underline text-blue-600 hover:text-blue-800"
               >
-                IPFS Link
+                IPFS Gateway
               </a>
             </p>
 
             {contract && (
-              <p>
-                🪪 Verified by Smart Contract:{' '}
-                <code className="bg-white p-1 rounded">{contract}</code>
+              <p className="text-sm text-gray-500">
+                🪪 Smart Contract: <code className="bg-white rounded px-1">{contract}</code>
               </p>
             )}
 
             <button
-              className="mt-2 px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition"
               onClick={handleExplainProof}
               disabled={explaining}
+              className="px-4 py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition shadow"
             >
-              {explaining ? 'Explaining...' : '🧠 Explain This'}
+              {explaining ? '🔄 Explaining...' : '🧠 Explain This'}
             </button>
 
             {explanation && (

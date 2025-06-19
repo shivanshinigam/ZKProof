@@ -9,7 +9,7 @@ from pydub import AudioSegment
 
 SAMPLE_RATE = 16000  # Hz
 DURATION = 5  # seconds
-DATA_DIR = "voice_data"
+DATA_DIR = "voice_data/human"
 
 
 def record_voice(label):

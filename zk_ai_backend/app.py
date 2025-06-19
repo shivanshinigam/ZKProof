@@ -56,10 +56,12 @@ async def verify_user(
 
     # ✅ Return result
     return {
-        "verified": is_verified,
+        "verified": bool(is_verified),
         "proof": zk_proof,
         "contract": "0x7EF2e0048f5bAeDe046f6BF797943daF4ED8CB47"
     }
+    print(f"✅ Final verification result: {bool(is_verified)}")
+
 
 # 🧠 Endpoint: LangChain Explanation
 @app.post("/explain-proof")
