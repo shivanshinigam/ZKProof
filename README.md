@@ -28,7 +28,7 @@ We flipped the script — using **ZKML** to verify *without revealing anything s
 |------------------|-----------------------------------|
 | 👤 Biometrics     | Keystroke Dynamics, Voice Analysis |
 | 🧠 AI Models       | Simple Random Forest (Human vs Bot) |
-| 🔒 ZK Proofs       | `snarkjs` + `circom` (mocked)      |
+| 🔒 ZK Proofs       | `snarkjs`      |
 | 📦 Decentralized Storage | IPFS via Pinata (returns CID)     |
 | 🧾 Smart Contract | Solidity (Remix + Testnet)         |
 | 🌐 Frontend       | React + Tailwind CSS               |
