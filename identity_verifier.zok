@@ -1,0 +1,7 @@
+def main(private field voice, private field keystroke) -> field
+{
+    field sum = voice + keystroke;
+    bool isHuman = sum == 2;
+    field result = isHuman ? 1 : 0;
+    return result;
+}

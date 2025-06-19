@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "name": "voice",
+      "public": false,
+      "type": "field"
+    },
+    {
+      "name": "keystroke",
+      "public": false,
+      "type": "field"
+    }
+  ],
+  "output": {
+    "type": "field"
+  }
+}
