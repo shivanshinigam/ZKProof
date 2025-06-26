@@ -1,4 +1,4 @@
-# 🛡️ ZK-AI Identity Verifier
+# 🛡️ ZK-AI Identity Verifier   (https://zkproofverifier.netlify.app/)
 
 > **Proof you're human — without giving away your data.**  
 Built with AI, Biometrics, ZK Proofs, IPFS, and Smart Contracts 🧠🔐🌐
